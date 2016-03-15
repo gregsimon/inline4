@@ -3,6 +3,8 @@
 
 #include "duktape.h"
 
+#define I4T  printf("[%s]\n",__PRETTY_FUNCTION__)
+
 namespace v8 {
 
 // -------------------------------------------------------------------------
@@ -132,7 +134,7 @@ Maybe<int32_t> Value::Int32Value(
     int length) {
 
 }
-int String::Length() const { return 0; }
+int String::Length() const { I4T; return 0; }
 int String::Utf8Length() const { return 0; }
 bool String::IsOneByte() const { return false; }
 bool String::ContainsOnlyOneByte() const { return false; }
@@ -150,35 +152,47 @@ String::Utf8Value::~Utf8Value() {
 /*static */ MaybeLocal<Script> Script::Compile(
       Local<Context> context, Local<String> source,
       ScriptOrigin* origin) {
+  I4T;
 }
 /* static */ MaybeLocal<Value> Script::Run(Local<Context> context) {
+  I4T;
 }
 
 
 // -------------------------------------------------------------------------
 // class Message
-Local<String> Message::Get() const { 
+Local<String> Message::Get() const {
+  I4T;
 }
 MaybeLocal<String> Message::GetSourceLine(
       Local<Context> context) const {
+  I4T;
 }
 ScriptOrigin Message::GetScriptOrigin() const {
+  I4T;
 }
 Local<Value> Message::GetScriptResourceName() const {
+  I4T;
 }
 Local<StackTrace> Message::GetStackTrace() const {
+  I4T;
 }
 Maybe<int> Message::GetLineNumber(Local<Context> context) const {
+  I4T;
 }
 int Message::GetStartPosition() const {
+  I4T;
   return 0;
 }
 int Message::GetEndPosition() const {
+  I4T;
   return 0;
 }
 Maybe<int> Message::GetStartColumn(Local<Context> context) const {
+  I4T;
 }
 Maybe<int> Message::GetEndColumn(Local<Context> context) const {
+  I4T;
 }
 
 // -------------------------------------------------------------------------
@@ -205,18 +219,19 @@ bool V8::Dispose() {
 const char* V8::GetVersion() {
   return "i4 JavaScript Engine";
 }
-void V8::ToLocalEmpty() {}
-void V8::FromJustIsNothing() {}
-void V8::ShutdownPlatform() {}
-void V8::InitializeExternalStartupData(const char* directory_path) {}
+void V8::ToLocalEmpty() {I4T;}
+void V8::FromJustIsNothing() {I4T;}
+void V8::ShutdownPlatform() {I4T;}
+void V8::InitializeExternalStartupData(const char* directory_path) {I4T;}
 void V8::InitializeExternalStartupData(const char* natives_blob,
-                                            const char* snapshot_blob) {}
+                                            const char* snapshot_blob) {I4T;}
 
 
 // -------------------------------------------------------------------------
 // class Template
 void Template::Set(Local<Name> name, Local<Data> value,
            PropertyAttribute attributes) {
+  I4T;
 }
 
 // -------------------------------------------------------------------------
@@ -224,6 +239,7 @@ void Template::Set(Local<Name> name, Local<Data> value,
 /* static */ Local<ObjectTemplate> ObjectTemplate::New(
       Isolate* isolate,
       Local<FunctionTemplate> constructor) {
+  I4T;
 }
 
 
@@ -233,56 +249,69 @@ void Template::Set(Local<Name> name, Local<Data> value,
       Isolate* isolate, FunctionCallback callback,
       Local<Value> data,
       Local<Signature> signature, int length) {
-
+  I4T;
 }
 
 // -------------------------------------------------------------------------
 // class TryCatch
 TryCatch::TryCatch(Isolate* isolate) {
+  I4T;
 }
-TryCatch::~TryCatch() {}
+TryCatch::~TryCatch() {I4T;}
 MaybeLocal<Value> TryCatch::StackTrace(Local<Context> context) const {
+  I4T;
 }
 Local<v8::Message> TryCatch::Message() const {
+  I4T;
 }
-void TryCatch::Reset() {}
-void TryCatch::SetVerbose(bool) {}
-void TryCatch::SetCaptureMessage(bool) {}
-bool TryCatch::HasCaught() const { return false; }
-bool TryCatch::CanContinue() const { return true; }
-bool TryCatch::HasTerminated() const { return false; }
+void TryCatch::Reset() {I4T;}
+void TryCatch::SetVerbose(bool) {I4T;}
+void TryCatch::SetCaptureMessage(bool) {I4T;}
+bool TryCatch::HasCaught() const { I4T; return false; }
+bool TryCatch::CanContinue() const { I4T; return true; }
+bool TryCatch::HasTerminated() const { I4T; return false; }
 Local<Value> TryCatch::ReThrow() {
+  I4T;
 }
 Local<Value> TryCatch::Exception() const {
+  I4T;
 }
 
 // -------------------------------------------------------------------------
 // class Isolate
 /* static */ Isolate* Isolate::New(const CreateParams& params) {
-
+I4T;
 }
 /* static */ Isolate* Isolate::GetCurrent() {
+  I4T;
   return 0;
 }
 void Isolate::Enter() {
+  I4T;
 }
 void Isolate::Exit() {
+  I4T;
 }
 void Isolate::Dispose() {
+  I4T;
 }
-void Isolate::DiscardThreadSpecificMetadata() {}
+void Isolate::DiscardThreadSpecificMetadata() {I4T;}
 size_t Isolate::NumberOfHeapSpaces() {
+  I4T;
   return 0;
 }
 bool Isolate::InContext() {
+  I4T;
   return true;
 }
 Local<Value> Isolate::ThrowException(Local<Value> exception) {
+  I4T;
 }
 Local<Context> Isolate::GetCurrentContext() {
+  I4T;
 }
 bool Isolate::GetHeapSpaceStatistics(HeapSpaceStatistics* space_statistics,
-                              size_t index) { return 0; }
-size_t Isolate::NumberOfTrackedHeapObjectTypes() {}
+                              size_t index) { I4T; return 0; }
+size_t Isolate::NumberOfTrackedHeapObjectTypes() {I4T;}
 
 } //  namespace v8
