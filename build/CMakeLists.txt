@@ -17,15 +17,18 @@ endif()
 
 set ( SOURCES
   ../src/inline4.cc
-  ../v8/samples/shell.cc
+  
   ../duktape/duktape.c
 )
 
-add_executable(inline4 ${SOURCES})
+add_executable(shell ${SOURCES} ../v8/samples/shell.cc)
+
+add_executable(test ${SOURCES} ../src/test.cc)
 
 set ( PROJECT_LINK_LIBS 
   pthread m
 )
 
-target_link_libraries(inline4 ${PROJECT_LINK_LIBS} )
+target_link_libraries(shell ${PROJECT_LINK_LIBS} )
+target_link_libraries(test ${PROJECT_LINK_LIBS} )
 
