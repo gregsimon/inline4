@@ -5,6 +5,7 @@ set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}")
 
 project (inline4)
 
+include_directories(../v8/)
 include_directories(../src)
 include_directories(../v8/include)
 include_directories(../duktape)
@@ -16,7 +17,7 @@ endif()
 
 set ( SOURCES
   ../src/inline4.cc
-  ../src/test.cc
+  ../v8/samples/shell.cc
   ../duktape/duktape.c
 )
 
