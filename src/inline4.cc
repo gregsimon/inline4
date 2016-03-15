@@ -3,10 +3,10 @@
 
 #include "duktape.h"
 
+#include <stack>
+
 #define I4T  printf("[%s]\n",__PRETTY_FUNCTION__)
 
-// Globals
-duk_context* _ctx = 0;
 
 namespace d {
   class Isolate {
@@ -18,6 +18,12 @@ namespace d {
 
 } // namespace d
 
+// -------------------------------------------------------------------------
+// Globals
+duk_context* _ctx = 0;
+std::stack<d::Isolate *> _isolates;
+
+
 
 namespace v8 {
 
@@ -26,7 +32,6 @@ namespace v8 {
 class i4Platform : public Platform {
 public:
   i4Platform() {}
-  size_t NumberOfAvailableBackgroundThreads() { return 0; }
   void CallOnBackgroundThread(Task* task,
                               ExpectedRuntime expected_runtime) override {
     task->Run();
@@ -100,6 +105,7 @@ void ResourceConstraints::ConfigureDefaults(uint64_t physical_memory,
       Local<ObjectTemplate> global_template,
       Local<Value> global_object)
 {
+  return Local<Context>();
 }
 void Context::Enter() {
 }
@@ -139,6 +145,7 @@ bool Value::IsGeneratorFunction() const { return false; }
 bool Value::IsGeneratorObject() const { return false; }*/
 Maybe<int32_t> Value::Int32Value(
       Local<Context> context) const {
+  return Just<int32_t>(0);
 }
 
 // -------------------------------------------------------------------------
@@ -146,7 +153,7 @@ Maybe<int32_t> Value::Int32Value(
 /* static */MaybeLocal<String> String::NewFromUtf8(
     Isolate* isolate, const char* data, v8::NewStringType type,
     int length) {
-
+  return MaybeLocal<String>();
 }
 int String::Length() const { I4T; return 0; }
 int String::Utf8Length() const { return 0; }
@@ -165,11 +172,14 @@ String::Utf8Value::~Utf8Value() {
 // class Script
 /*static */ MaybeLocal<Script> Script::Compile(
       Local<Context> context, Local<String> source,
-      ScriptOrigin* origin) {
+      ScriptOrigin* origin)
+{
   I4T;
+  return MaybeLocal<Script>();
 }
 /* static */ MaybeLocal<Value> Script::Run(Local<Context> context) {
   I4T;
+  return MaybeLocal<Value>();
 }
 
 
@@ -177,22 +187,28 @@ String::Utf8Value::~Utf8Value() {
 // class Message
 Local<String> Message::Get() const {
   I4T;
+  return Local<String>();
 }
 MaybeLocal<String> Message::GetSourceLine(
       Local<Context> context) const {
   I4T;
+  return MaybeLocal<String>();
 }
 ScriptOrigin Message::GetScriptOrigin() const {
   I4T;
+  return ScriptOrigin(Local<String>());
 }
 Local<Value> Message::GetScriptResourceName() const {
   I4T;
+  return Local<Value>();
 }
 Local<StackTrace> Message::GetStackTrace() const {
   I4T;
+  return Local<StackTrace>();
 }
 Maybe<int> Message::GetLineNumber(Local<Context> context) const {
   I4T;
+  return Just<int>(0);
 }
 int Message::GetStartPosition() const {
   I4T;
@@ -204,9 +220,11 @@ int Message::GetEndPosition() const {
 }
 Maybe<int> Message::GetStartColumn(Local<Context> context) const {
   I4T;
+  return Just<int>(0);
 }
 Maybe<int> Message::GetEndColumn(Local<Context> context) const {
   I4T;
+  return Just<int>(0);
 }
 
 // -------------------------------------------------------------------------
@@ -263,6 +281,8 @@ void Template::Set(Local<Name> name, Local<Data> value,
   I4T;
   d::Isolate* i = reinterpret_cast<d::Isolate*>(isolate);
   // TODO
+
+  return Local<ObjectTemplate>();
 }
 
 
@@ -273,6 +293,7 @@ void Template::Set(Local<Name> name, Local<Data> value,
       Local<Value> data,
       Local<Signature> signature, int length) {
   I4T;
+  return Local<FunctionTemplate>();
 }
 
 // -------------------------------------------------------------------------
@@ -283,9 +304,11 @@ TryCatch::TryCatch(Isolate* isolate) {
 TryCatch::~TryCatch() {I4T;}
 MaybeLocal<Value> TryCatch::StackTrace(Local<Context> context) const {
   I4T;
+  return Local<Value>();
 }
 Local<v8::Message> TryCatch::Message() const {
   I4T;
+  return Local<v8::Message>();
 }
 void TryCatch::Reset() {I4T;}
 void TryCatch::SetVerbose(bool) {I4T;}
@@ -295,9 +318,11 @@ bool TryCatch::CanContinue() const { I4T; return true; }
 bool TryCatch::HasTerminated() const { I4T; return false; }
 Local<Value> TryCatch::ReThrow() {
   I4T;
+  return Local<Value>();
 }
 Local<Value> TryCatch::Exception() const {
   I4T;
+  return Local<Value>();
 }
 
 // -------------------------------------------------------------------------
@@ -316,10 +341,12 @@ Local<Value> TryCatch::Exception() const {
 void Isolate::Enter() {
   I4T;
   d::Isolate* i = reinterpret_cast<d::Isolate*>(this);
+  _isolates.push(i);
 }
 void Isolate::Exit() {
   I4T;
   d::Isolate* i = reinterpret_cast<d::Isolate*>(this);
+  _isolates.pop();
 }
 void Isolate::Dispose() {
   I4T;
@@ -339,12 +366,17 @@ bool Isolate::InContext() {
 }
 Local<Value> Isolate::ThrowException(Local<Value> exception) {
   I4T;
+  return Local<Value>();
 }
 Local<Context> Isolate::GetCurrentContext() {
   I4T;
+  return Local<Context>();
 }
 bool Isolate::GetHeapSpaceStatistics(HeapSpaceStatistics* space_statistics,
                               size_t index) { I4T; return 0; }
-size_t Isolate::NumberOfTrackedHeapObjectTypes() {I4T;}
+size_t Isolate::NumberOfTrackedHeapObjectTypes() {
+  I4T;
+  return 0;
+}
 
 } //  namespace v8

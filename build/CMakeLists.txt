@@ -12,7 +12,7 @@ include_directories(../duktape)
 
 # V8 requires C++11
 if(UNIX)
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g")
 endif()
 
 set ( SOURCES
