@@ -5,6 +5,20 @@
 
 #define I4T  printf("[%s]\n",__PRETTY_FUNCTION__)
 
+// Globals
+duk_context* _ctx = 0;
+
+namespace d {
+  class Isolate {
+  public:
+    Isolate() : ctx(0) {}
+    ~Isolate() {}
+    duk_context* ctx;
+  };
+
+} // namespace d
+
+
 namespace v8 {
 
 // -------------------------------------------------------------------------
@@ -197,23 +211,30 @@ Maybe<int> Message::GetEndColumn(Local<Context> context) const {
 
 // -------------------------------------------------------------------------
 // class V8
-void V8::SetNativesDataBlob(StartupData* startup_blob) {}
-void V8::SetSnapshotDataBlob(StartupData* startup_blob) {}
+void V8::SetNativesDataBlob(StartupData* startup_blob) {I4T;}
+void V8::SetSnapshotDataBlob(StartupData* startup_blob) {I4T;}
 StartupData V8::CreateSnapshotDataBlob(const char* custom_source) {
+  I4T;
   return StartupData{0,0};
 }
-void V8::InitializePlatform(Platform* platform) {}
-void V8::SetFlagsFromString(const char* str, int length) {}
+void V8::InitializePlatform(Platform* platform) {I4T;}
+void V8::SetFlagsFromString(const char* str, int length) {I4T;}
 void V8::SetFlagsFromCommandLine(int* argc,
                               char** argv,
-                              bool remove_flags) {}
+                              bool remove_flags) {I4T;}
 bool V8::Initialize() {
+  I4T;
+  _ctx = duk_create_heap_default();
   return true;
 }
 bool V8::InitializeICU(const char* icu_data_file) {
+  I4T;
   return true;
 }
 bool V8::Dispose() {
+  I4T;
+  duk_destroy_heap(_ctx);
+  _ctx = 0;
   return true;
 }
 const char* V8::GetVersion() {
@@ -240,6 +261,8 @@ void Template::Set(Local<Name> name, Local<Data> value,
       Isolate* isolate,
       Local<FunctionTemplate> constructor) {
   I4T;
+  d::Isolate* i = reinterpret_cast<d::Isolate*>(isolate);
+  // TODO
 }
 
 
@@ -280,7 +303,11 @@ Local<Value> TryCatch::Exception() const {
 // -------------------------------------------------------------------------
 // class Isolate
 /* static */ Isolate* Isolate::New(const CreateParams& params) {
-I4T;
+  I4T;
+  d::Isolate* i = new d::Isolate();
+  Isolate* v8_isolate = reinterpret_cast<Isolate*>(i);
+  i->ctx = duk_create_heap_default();
+  return v8_isolate;
 }
 /* static */ Isolate* Isolate::GetCurrent() {
   I4T;
@@ -288,12 +315,17 @@ I4T;
 }
 void Isolate::Enter() {
   I4T;
+  d::Isolate* i = reinterpret_cast<d::Isolate*>(this);
 }
 void Isolate::Exit() {
   I4T;
+  d::Isolate* i = reinterpret_cast<d::Isolate*>(this);
 }
 void Isolate::Dispose() {
   I4T;
+  d::Isolate* i = reinterpret_cast<d::Isolate*>(this);
+  duk_destroy_heap(i->ctx);
+  delete i;
 }
 void Isolate::DiscardThreadSpecificMetadata() {I4T;}
 size_t Isolate::NumberOfHeapSpaces() {
@@ -302,6 +334,7 @@ size_t Isolate::NumberOfHeapSpaces() {
 }
 bool Isolate::InContext() {
   I4T;
+  d::Isolate* i = reinterpret_cast<d::Isolate*>(this);
   return true;
 }
 Local<Value> Isolate::ThrowException(Local<Value> exception) {
