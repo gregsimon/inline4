@@ -1,8 +1,13 @@
+
 #include "v8.h"
 #include "libplatform/libplatform.h"
 
 #include "duktape.h"
 
+#include "inline4.h"
+
+#include <assert.h>
+#include <map>
 #include <stack>
 
 #define I4T  printf("[%s]\n",__PRETTY_FUNCTION__)
@@ -105,6 +110,7 @@ void ResourceConstraints::ConfigureDefaults(uint64_t physical_memory,
       Local<ObjectTemplate> global_template,
       Local<Value> global_object)
 {
+  I4T;
   return Local<Context>();
 }
 void Context::Enter() {
@@ -119,32 +125,9 @@ Isolate* Context::GetIsolate() {
 // -------------------------------------------------------------------------
 // class Value
 bool Value::IsTrue() const { return false; }
-/*bool Value::IsNull() const { return false; }
-bool Value::IsTrue() const { return false; }
-bool Value::IsFalse() const { return false; }
-bool Value::IsName() const { return false; }
-bool Value::IsString() const { return false; }
-bool Value::IsSymbol() const { return false; }
-bool Value::IsFunction() const { return false; }
-bool Value::IsArray() const { return false; }
-bool Value::IsObject() const { return false; }
-bool Value::IsBoolean() const { return false; }
-bool Value::IsNumber() const { return false; }
-bool Value::IsExternal() const { return false; }
-bool Value::IsInt32() const { return false; }
-bool Value::IsUint32() const { return false; }
-bool Value::IsDate() const { return false; }
-bool Value::IsArgumentsObject() const { return false; }
-bool Value::IsBooleanObject() const { return false; }
-bool Value::IsNumberObject() const { return false; }
-bool Value::IsStringObject() const { return false; }
-bool Value::IsSymbolObject() const { return false; }
-bool Value::IsNativeError() const { return false; }
-bool Value::IsRegExp() const { return false; }
-bool Value::IsGeneratorFunction() const { return false; }
-bool Value::IsGeneratorObject() const { return false; }*/
 Maybe<int32_t> Value::Int32Value(
       Local<Context> context) const {
+  I4T;
   return Just<int32_t>(0);
 }
 
@@ -153,19 +136,22 @@ Maybe<int32_t> Value::Int32Value(
 /* static */MaybeLocal<String> String::NewFromUtf8(
     Isolate* isolate, const char* data, v8::NewStringType type,
     int length) {
+  I4T;
   return MaybeLocal<String>();
 }
 int String::Length() const { I4T; return 0; }
-int String::Utf8Length() const { return 0; }
-bool String::IsOneByte() const { return false; }
-bool String::ContainsOnlyOneByte() const { return false; }
+int String::Utf8Length() const { I4T; return 0; }
+bool String::IsOneByte() const { I4T; return false; }
+bool String::ContainsOnlyOneByte() const { I4T; return false; }
 
 
 // -------------------------------------------------------------------------
 // class String::Utf8value
 String::Utf8Value::Utf8Value(Local<v8::Value> obj) {
+  I4T;
 }
 String::Utf8Value::~Utf8Value() {
+  I4T;
 }
 
 // -------------------------------------------------------------------------
@@ -273,14 +259,39 @@ void Template::Set(Local<Name> name, Local<Data> value,
   I4T;
 }
 
+class iFunctionTemplate {
+public:
+  iFunctionTemplate() {}
+  int foo;
+};
+
+// Holds properties of that we'll apply to every instance of this
+// template.
+class iObjectTemplate {
+public:
+  iObjectTemplate() {}
+  std::map<std::string, iFunctionTemplate*> props;
+};
+
 // -------------------------------------------------------------------------
 // class ObjectTemplate
 /* static */ Local<ObjectTemplate> ObjectTemplate::New(
       Isolate* isolate,
       Local<FunctionTemplate> constructor) {
   I4T;
+  // api.cc : return New(reinterpret_cast<i::Isolate*>(isolate), constructor);
+
+
   d::Isolate* i = reinterpret_cast<d::Isolate*>(isolate);
-  // TODO
+  iObjectTemplate* ot = new iObjectTemplate();
+  iFunctionTemplate* ft = 0;
+
+  if (!constructor.IsEmpty()) {
+    ft = new iFunctionTemplate();
+    assert(0);
+  }
+
+  ObjectTemplate* v8_ot = reinterpret_cast<ObjectTemplate*>(ot);
 
   return Local<ObjectTemplate>();
 }
@@ -293,7 +304,10 @@ void Template::Set(Local<Name> name, Local<Data> value,
       Local<Value> data,
       Local<Signature> signature, int length) {
   I4T;
-  return Local<FunctionTemplate>();
+  iFunctionTemplate* ft = new iFunctionTemplate();
+  // TODO store signature
+  FunctionTemplate* v8_ft =  reinterpret_cast<FunctionTemplate*>(ft);
+  return Utils::ToLocal(v8_ft);
 }
 
 // -------------------------------------------------------------------------

@@ -17,8 +17,9 @@ endif()
 
 set ( SOURCES
   ../src/inline4.cc
-  
+  ../src/inline4.h
   ../duktape/duktape.c
+  ../duktape/duktape.h
 )
 
 add_executable(shell ${SOURCES} ../v8/samples/shell.cc)
