@@ -16,10 +16,14 @@
 
 #define I4T  printf("[%s]\n",__PRETTY_FUNCTION__)
 
+// Shared base class for internal representations of v8.h client objects.
+// This is required so we can track these instances via handlescope.
 class iBase {
 public:
   virtual ~iBase() {}
 };
+
+// Internal representations of v8.h client objects
 
 class iString : public iBase {
 public:

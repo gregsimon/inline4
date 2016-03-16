@@ -182,6 +182,7 @@ Maybe<int32_t> Value::Int32Value(
   // V8 would put this into the heap, but we won't commit it to 
   // the duktape heap until we know what it's being used for.
   iString* str = new iString();
+  TrackHandle(str);
   str->s = data;
   String* v8_str = reinterpret_cast<String*>(str);
   return Local<String>(Local<String>(v8_str));
@@ -208,6 +209,15 @@ String::Utf8Value::~Utf8Value() {
       ScriptOrigin* origin)
 {
   I4T;
+
+  iContext* icontext = reinterpret_cast<iContext*>(*context);
+  iString* istr = reinterpret_cast<iString*>(*source);
+
+  (void)duk_compile_string(icontext->ctx, 0, istr->s.c_str());
+  // result is on top of the value stack.
+
+  // TODO : extract bytecode?
+
   return MaybeLocal<Script>();
 }
 /* static */ MaybeLocal<Value> Script::Run(Local<Context> context) {
