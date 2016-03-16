@@ -7,6 +7,7 @@
 namespace v8 {
 
 class FunctionTemplate;
+class iFunctionTemplate;
 
 class Utils {
  public:
@@ -21,7 +22,7 @@ class Utils {
   //static Local<ObjectTemplate> ToObjectTemplate(NeanderObject obj);
 
   static inline Local<FunctionTemplate> ToLocal(
-      v8::internal::Handle<v8::internal::Context> obj);
+      FunctionTemplate obj);
 
 /*
   static inline Local<Context> ToLocal(

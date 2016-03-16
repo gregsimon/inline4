@@ -84,6 +84,59 @@ const duk_function_list_entry Foo_methods[] = {
 };
 
 
+void dump_value_stack(duk_context *c)
+{
+  int i=-1;
+  const char* s;
+
+  while(1) {
+    int type = duk_get_type(c, i);
+    if (DUK_TYPE_NONE == type)
+      break;
+
+    printf("%d ", i);
+
+    switch(type) {
+      case DUK_TYPE_UNDEFINED: 
+        printf("DUK_TYPE_UNDEFINED\n");
+        break;
+      case DUK_TYPE_NULL: 
+        printf("DUK_TYPE_NULL\n");
+        break;
+      case DUK_TYPE_BOOLEAN: 
+        printf("DUK_TYPE_BOOLEAN\n");
+        break;
+      case DUK_TYPE_NUMBER: 
+        printf("DUK_TYPE_NUMBER\n");
+        break;
+      case DUK_TYPE_OBJECT: 
+        printf("DUK_TYPE_OBJECT\n");
+        break;
+      case DUK_TYPE_BUFFER: 
+        printf("DUK_TYPE_BUFFER\n");
+        break;
+      case DUK_TYPE_POINTER: 
+        printf("DUK_TYPE_POINTER\n");
+        break;
+      case DUK_TYPE_STRING: 
+        printf("DUK_TYPE_POINTER\n");
+        break;
+      case DUK_TYPE_LIGHTFUNC: 
+        printf("DUK_TYPE_LIGHTFUNC\n");
+        break;
+      default:
+        printf("Unknown type=%d\n", type);
+    }
+    
+    //s = duk_safe_to_string(c, i); 
+    //printf("     %s\n",s?s:"");
+    i--;
+  }
+
+  printf("\n");
+}
+
+
 
 int main(int argc, char** argv)
 {
@@ -94,15 +147,37 @@ int main(int argc, char** argv)
 
 	if( (ctx = duk_create_heap_default()) )
 	{
-		duk_push_c_function(ctx, Foo_ctor, 0);
+    // push a funcation callback into the value stack as 
+    // an ECMAScript function
+    dump_value_stack(ctx);
 
-		// create proto with tostring and the rest.
+		duk_push_c_function(ctx, Foo_ctor, /*nargs=*/0);
+    printf("duk_push_c_function(ctx, Foo_ctor, /*nargs=*/0);\n");
+    dump_value_stack(ctx);
+
+    // push empty object onto the value stack (at index -1)
 		duk_push_object(ctx);
+    printf("duk_push_object(ctx);\n");
+    dump_value_stack(ctx);
+
+    // [Foo_ctor] [null]
+
+    // replace empty object in value stack with our list of methods
 		duk_put_function_list(ctx, -1, Foo_methods);
+    printf("duk_put_function_list(ctx, -1, Foo_methods);\n");
+    dump_value_stack(ctx);
+    // [Foo_ctor] [Foo_methods]
+
+    // into the stack position -1 (below the methods) place a name
 		duk_put_prop_string(ctx, -2, "prototype");
+    printf("duk_put_prop_string(ctx, -2, \"prototype\");\n");
+    dump_value_stack(ctx);
+    // [Foo_ctor] 
 		
 		// now store as a global
+    printf("duk_put_global_string(ctx, \"Foo\");\n");
 		duk_put_global_string(ctx, "Foo");
+    dump_value_stack(ctx);
 
 
 		if (!duk_peval_file(ctx, "test_func.js"))
@@ -114,7 +189,7 @@ int main(int argc, char** argv)
 		else
 			printf("Error: %s\n", duk_safe_to_string(ctx, -1));
 
-
+    dump_value_stack(ctx);
 
 	}
 

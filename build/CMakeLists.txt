@@ -22,9 +22,10 @@ set ( SOURCES
   ../duktape/duktape.h
 )
 
-add_executable(shell ${SOURCES} ../v8/samples/shell.cc)
 
+add_executable(shell ${SOURCES} ../v8/samples/shell.cc)
 add_executable(test ${SOURCES} ../src/test.cc)
+add_executable(jsplayground ../jsplayground.cpp ../duktape/duktape.c)
 
 set ( PROJECT_LINK_LIBS 
   pthread m
@@ -32,4 +33,5 @@ set ( PROJECT_LINK_LIBS
 
 target_link_libraries(shell ${PROJECT_LINK_LIBS} )
 target_link_libraries(test ${PROJECT_LINK_LIBS} )
+target_link_libraries(jsplayground ${PROJECT_LINK_LIBS} )
 

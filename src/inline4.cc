@@ -296,6 +296,16 @@ public:
   return Local<ObjectTemplate>();
 }
 
+/**
+ * in V8's impl, nearly all objects are stored in the heap itself, and
+ * utility classes like Local<> are used to protect data from being
+ * collected while they need to be kept in memory. 
+ *
+ * in i4, we don't store everything in the heap; however the lifetime
+ * is still important as the v8.h client expects certain behavior
+ *
+ */
+
 
 // -------------------------------------------------------------------------
 // class FunctionTemplate
