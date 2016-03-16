@@ -1,33 +1,15 @@
 
-#include "v8.h"
-#include "libplatform/libplatform.h"
-
-#include "duktape.h"
 
 #include "inline4.h"
 
-#include <assert.h>
-#include <map>
-#include <string>
-#include <stack>
-
-#define I4T  printf("[%s]\n",__PRETTY_FUNCTION__)
 
 
-namespace d {
-  class Isolate {
-  public:
-    Isolate() : ctx(0) {}
-    ~Isolate() {}
-    duk_context* ctx;
-  };
 
-} // namespace d
 
 // -------------------------------------------------------------------------
 // Globals
 duk_context* _ctx = 0;
-std::stack<d::Isolate *> _isolates;
+std::stack<iIsolate *> _isolates;
 
 
 
@@ -89,22 +71,67 @@ namespace platform {
   }
 }// namespace platform
 
-
-// -------------------------------------------------------------------------
-// class HandleScope
-HandleScope::HandleScope(Isolate* isolate) {
-}
-HandleScope::~HandleScope() {
-}
-
 // -------------------------------------------------------------------------
 // class ResourceConstraints
 ResourceConstraints::ResourceConstraints() {}
 void ResourceConstraints::ConfigureDefaults(uint64_t physical_memory,
                          uint64_t virtual_memory_limit) {}
 
+
+typedef std::stack<HandleScope*> HandleScopeStack;
+HandleScopeStack _hscopes;
+
+typedef std::multimap<HandleScope*,iBase*> HandleScopeMap;
+HandleScopeMap _handles;
+
+void TrackHandle(iBase* handle) {
+  if (_hscopes.size()) {
+    HandleScope* hs = _hscopes.top();
+    _handles.insert(std::pair<HandleScope*, iBase*>(hs, handle));
+  }
+}
+
+// -------------------------------------------------------------------------
+// class HandleScope
+HandleScope::HandleScope(Isolate* isolate) {
+  I4T;
+  // Start to track all stack-allocated objects associated with
+  // this isolate.
+  _hscopes.push(this);
+}
+HandleScope::~HandleScope() {
+  I4T;
+  _hscopes.pop();
+  
+  // delete anything allocated since the ctor
+  for (HandleScopeMap::iterator it=_handles.find(this);
+      it != _handles.end();)
+  {
+    delete it->second;
+    it = _handles.erase(it);
+  }
+}
+void HandleScope::Initialize(Isolate* isolate) {
+  I4T;
+}
+
 // -------------------------------------------------------------------------
 // class Context
+
+/** 
+  * v8 Context -> duktape context
+  *  create a new context inside a given heap (isolate)
+  *
+  *     duk_push_thread(ctx);
+  *     duk_context* new_ctx = duk_get_context(ctx, -1);
+  *     
+  *
+  *
+  * v8 isolate -> duktape heap (no shared globals)
+  *     ctx = duk_create_heap_default();
+  *
+  */
+
 
 /* static */ Local<Context> Context::New(
       Isolate* isolate, ExtensionConfiguration* extensions,
@@ -112,13 +139,26 @@ void ResourceConstraints::ConfigureDefaults(uint64_t physical_memory,
       Local<Value> global_object)
 {
   I4T;
-  return Local<Context>();
+
+  // create a new context in the "top" isolate passed in!
+  iIsolate* i = reinterpret_cast<iIsolate*>(isolate);
+  iContext* c = new iContext();
+
+  // Track with the handlescope
+  TrackHandle(c);
+
+  (void)duk_push_thread(i->ctx);
+  c->ctx = duk_get_context(i->ctx, -1);
+  return Local<Context>(Local<Context>(reinterpret_cast<Context*>(c)));
 }
 void Context::Enter() {
+  I4T;
 }
 void Context::Exit() {
+  I4T;
 }
 Isolate* Context::GetIsolate() {
+  I4T;
   return 0;
 }
 
@@ -266,19 +306,7 @@ void Template::Set(Local<Name> name, Local<Data> value,
   I4T;
 }
 
-class iFunctionTemplate {
-public:
-  iFunctionTemplate() {}
-  int foo;
-};
 
-// Holds properties of that we'll apply to every instance of this
-// template.
-class iObjectTemplate {
-public:
-  iObjectTemplate() {}
-  std::map<std::string, iFunctionTemplate*> props;
-};
 
 // -------------------------------------------------------------------------
 // class ObjectTemplate
@@ -289,7 +317,7 @@ public:
   // api.cc : return New(reinterpret_cast<i::Isolate*>(isolate), constructor);
 
 
-  d::Isolate* i = reinterpret_cast<d::Isolate*>(isolate);
+  iIsolate* i = reinterpret_cast<iIsolate*>(isolate);
   iObjectTemplate* ot = new iObjectTemplate();
   iFunctionTemplate* ft = 0;
 
@@ -325,7 +353,8 @@ public:
   // TODO store signature
   FunctionTemplate* v8_ft =  reinterpret_cast<FunctionTemplate*>(ft);
   
-  return Local<FunctionTemplate>(Local<FunctionTemplate>(v8_ft));
+  //return Local<FunctionTemplate>(Local<FunctionTemplate>(v8_ft));
+  return Local<FunctionTemplate>();
 }
 
 // -------------------------------------------------------------------------
@@ -361,8 +390,12 @@ Local<Value> TryCatch::Exception() const {
 // class Isolate
 /* static */ Isolate* Isolate::New(const CreateParams& params) {
   I4T;
-  d::Isolate* i = new d::Isolate();
+  iIsolate* i = new iIsolate();
   Isolate* v8_isolate = reinterpret_cast<Isolate*>(i);
+
+  // Create a new duktape heap for this. Note this heap does not share
+  // globals with anything else. Code won't actually be run in this
+  // context; the caller will create new v8::contexts for this.
   i->ctx = duk_create_heap_default();
   return v8_isolate;
 }
@@ -372,17 +405,17 @@ Local<Value> TryCatch::Exception() const {
 }
 void Isolate::Enter() {
   I4T;
-  d::Isolate* i = reinterpret_cast<d::Isolate*>(this);
+  iIsolate* i = reinterpret_cast<iIsolate*>(this);
   _isolates.push(i);
 }
 void Isolate::Exit() {
   I4T;
-  d::Isolate* i = reinterpret_cast<d::Isolate*>(this);
+  iIsolate* i = reinterpret_cast<iIsolate*>(this);
   _isolates.pop();
 }
 void Isolate::Dispose() {
   I4T;
-  d::Isolate* i = reinterpret_cast<d::Isolate*>(this);
+  iIsolate* i = reinterpret_cast<iIsolate*>(this);
   duk_destroy_heap(i->ctx);
   delete i;
 }
@@ -393,7 +426,7 @@ size_t Isolate::NumberOfHeapSpaces() {
 }
 bool Isolate::InContext() {
   I4T;
-  d::Isolate* i = reinterpret_cast<d::Isolate*>(this);
+  iIsolate* i = reinterpret_cast<iIsolate*>(this);
   return true;
 }
 Local<Value> Isolate::ThrowException(Local<Value> exception) {

@@ -32,23 +32,34 @@ int main(int argc, char* argv[]) {
   Isolate* isolate = Isolate::New(create_params);
   {
     Isolate::Scope isolate_scope(isolate);
+      // ^- this just causes iso->enter(), iso->exit() on dtor
+
     // Create a stack-allocated handle scope.
     HandleScope handle_scope(isolate);
+      // ^-- this is going to track stack allocated v8 objects and
+      // keep them pinned until ~handle_scope()
+
     // Create a new context.
     Local<Context> context = Context::New(isolate);
-    // Enter the context for compiling and running the hello world script.
-    Context::Scope context_scope(context);
+    
+    // Enter the context for compiling and running the hello world script
+    //Context::Scope context_scope(context);
+      // ^-- handles calling ctx->Enter(), ctx->Exit() on dtor
+
     // Create a string containing the JavaScript source code.
-    Local<String> source =
-        String::NewFromUtf8(isolate, "'Hello' + ', World!'",
-                            NewStringType::kNormal).ToLocalChecked();
+    //Local<String> source =
+      //  String::NewFromUtf8(isolate, "'Hello' + ', World!'",
+        //                    NewStringType::kNormal).ToLocalChecked();
+
+        /*
     // Compile the source code.
     Local<Script> script = Script::Compile(context, source).ToLocalChecked();
     // Run the script to get the result.
     Local<Value> result = script->Run(context).ToLocalChecked();
     // Convert the result to an UTF8 string and print it.
     String::Utf8Value utf8(result);
-    printf("%s\n", *utf8);
+    printf("%s\n", *utf8); */
+    printf(" should start dtors:\n");
   }
   // Dispose the isolate and tear down V8.
   isolate->Dispose();

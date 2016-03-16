@@ -3,20 +3,62 @@
 #define __inline4_h__
 
 #include "v8.h"
+#include "libplatform/libplatform.h"
+
+#include "duktape.h"
 
 #include <string>
+#include <map>
+#include <stack>
+
+#include <assert.h>
+
+
+#define I4T  printf("[%s]\n",__PRETTY_FUNCTION__)
+
+class iBase {
+public:
+  virtual ~iBase() {}
+};
+
+class iString : public iBase {
+public:
+  iString() {I4T;}
+  ~iString() {I4T;}
+  std::string s;
+};
+
+class iContext : public iBase {
+public:
+  iContext() {I4T;}
+  ~iContext() {I4T;}
+  duk_context* ctx;
+};
+
+class iIsolate : public iBase {
+public:
+  iIsolate() : ctx(0) {I4T;}
+  ~iIsolate() {I4T;}
+  duk_context* ctx;
+};
+
+class iFunctionTemplate : public iBase {
+public:
+  iFunctionTemplate() {}
+  int foo;
+};
+
+// Holds properties of that we'll apply to every instance of this
+// template.
+class iObjectTemplate : public iBase {
+public:
+  iObjectTemplate() {}
+  std::map<std::string, iFunctionTemplate*> props;
+};
 
 namespace v8 {
 
 class FunctionTemplate;
-class iFunctionTemplate;
-class iString;
-
-class iString {
-public:
-  iString() {}
-  std::string s;
-};
 
 class Utils {
  public:
