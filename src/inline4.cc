@@ -8,6 +8,7 @@
 
 #include <assert.h>
 #include <map>
+#include <string>
 #include <stack>
 
 #define I4T  printf("[%s]\n",__PRETTY_FUNCTION__)
@@ -135,9 +136,15 @@ Maybe<int32_t> Value::Int32Value(
 // class String
 /* static */MaybeLocal<String> String::NewFromUtf8(
     Isolate* isolate, const char* data, v8::NewStringType type,
-    int length) {
+    int length)
+{
   I4T;
-  return MaybeLocal<String>();
+  // V8 would put this into the heap, but we won't commit it to 
+  // the duktape heap until we know what it's being used for.
+  iString* str = new iString();
+  str->s = data;
+  String* v8_str = reinterpret_cast<String*>(str);
+  return Local<String>(Local<String>(v8_str));
 }
 int String::Length() const { I4T; return 0; }
 int String::Utf8Length() const { I4T; return 0; }
@@ -317,7 +324,8 @@ public:
   iFunctionTemplate* ft = new iFunctionTemplate();
   // TODO store signature
   FunctionTemplate* v8_ft =  reinterpret_cast<FunctionTemplate*>(ft);
-  return Utils::ToLocal(v8_ft);
+  
+  return Local<FunctionTemplate>(Local<FunctionTemplate>(v8_ft));
 }
 
 // -------------------------------------------------------------------------

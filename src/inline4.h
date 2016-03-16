@@ -4,10 +4,19 @@
 
 #include "v8.h"
 
+#include <string>
+
 namespace v8 {
 
 class FunctionTemplate;
 class iFunctionTemplate;
+class iString;
+
+class iString {
+public:
+  iString() {}
+  std::string s;
+};
 
 class Utils {
  public:
@@ -23,6 +32,9 @@ class Utils {
 
   static inline Local<FunctionTemplate> ToLocal(
       FunctionTemplate obj);
+
+  static inline Local<String> ToLocal(
+      String obj);
 
 /*
   static inline Local<Context> ToLocal(
