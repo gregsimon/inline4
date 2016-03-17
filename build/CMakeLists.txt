@@ -7,8 +7,8 @@ project (inline4)
 
 include_directories(../src)
 include_directories(../third_party/duktape/src-separate)
-include_directories(../v8/)
-include_directories(../v8/include)
+include_directories(../third_party/v8/)
+include_directories(../third_party/v8/include)
 
 # V8 requires C++11
 if(UNIX)
@@ -70,7 +70,7 @@ set ( DUKTAPE_SOURCES
 )
 
 
-add_executable(shell ${I4_SOURCES} ${DUKTAPE_SOURCES} ../v8/samples/shell.cc)
+add_executable(shell ${I4_SOURCES} ${DUKTAPE_SOURCES} ../third_party/v8/samples/shell.cc)
 add_executable(simple ${I4_SOURCES} ${DUKTAPE_SOURCES} ../src/test.cc)
 add_executable(jsplayground ../jsplayground.cpp ${DUKTAPE_SOURCES})
 
