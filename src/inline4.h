@@ -20,35 +20,65 @@
 // This is required so we can track these instances via handlescope.
 class iBase {
 public:
+  iBase() = delete;
+  iBase(int t=DUK_TYPE_UNDEFINED) : _type(t) {}
   virtual ~iBase() {}
+  int _type; // DUK_TYPE_*
 };
 
 // Internal representations of v8.h client objects
 
 class iString : public iBase {
 public:
-  iString() {I4T;}
+  iString() : iBase(DUK_TYPE_STRING) {I4T;}
+  iString(const char* data) : iBase(DUK_TYPE_STRING), s(data) {I4T;}
   ~iString() {I4T;}
+  int len() const { return s.size(); }
   std::string s;
+};
+
+class iScript : public iBase {
+public:
+  iScript() : iBase(DUK_TYPE_UNDEFINED), _bytecode(0), _len(0) {I4T;}
+  ~iScript() {I4T; delete[] _bytecode; }
+  bool set(const uint8_t* b, size_t l) {
+    delete[] _bytecode;
+   if( !(_bytecode = new uint8_t[l]))
+    return false;
+    memcpy(_bytecode, b, l);
+    _len = l;
+    return true;
+  }
+  void print() const {
+    printf("bytecode %ld bytes:\n", _len);
+    for (size_t i=0 ;i<_len; i++)
+      printf("%02x ", _bytecode[i]);
+    printf("\n");
+  }
+  size_t len() const { return _len; }
+  const uint8_t* bytecode() { return _bytecode; }
+private:
+  uint8_t* _bytecode;
+  size_t _len;
 };
 
 class iContext : public iBase {
 public:
-  iContext() {I4T;}
+  iContext() : iBase(DUK_TYPE_UNDEFINED) {I4T;}
   ~iContext() {I4T;}
   duk_context* ctx;
 };
 
 class iIsolate : public iBase {
 public:
-  iIsolate() : ctx(0) {I4T;}
+  iIsolate() : iBase(DUK_TYPE_UNDEFINED), ctx(0) {I4T;}
   ~iIsolate() {I4T;}
   duk_context* ctx;
 };
 
 class iFunctionTemplate : public iBase {
 public:
-  iFunctionTemplate() {}
+  iFunctionTemplate() : iBase(DUK_TYPE_UNDEFINED) {I4T;}
   int foo;
 };
 
@@ -56,7 +86,7 @@ public:
 // template.
 class iObjectTemplate : public iBase {
 public:
-  iObjectTemplate() {}
+  iObjectTemplate() : iBase(DUK_TYPE_UNDEFINED) {I4T;}
   std::map<std::string, iFunctionTemplate*> props;
 };
 
@@ -73,16 +103,15 @@ class Utils {
     return condition;
   }
 
-  //static Local<FunctionTemplate> ToFunctionTemplate(NeanderObject obj);
-  //static Local<ObjectTemplate> ToObjectTemplate(NeanderObject obj);
-
-  static inline Local<FunctionTemplate> ToLocal(
-      FunctionTemplate obj);
-
-  static inline Local<String> ToLocal(
-      String obj);
+  template<class To>
+  static inline Local<To> Convert(iBase* obj) {
+    return Local<To>(reinterpret_cast<To*>(obj));
+  }
 
 /*
+  static Local<FunctionTemplate> ToFunctionTemplate(NeanderObject obj);
+  static Local<ObjectTemplate> ToObjectTemplate(NeanderObject obj);
+
   static inline Local<Context> ToLocal(
       v8::internal::Handle<v8::internal::Context> obj);
   static inline Local<Value> ToLocal(

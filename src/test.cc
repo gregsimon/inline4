@@ -55,10 +55,11 @@ int main(int argc, char* argv[]) {
     Local<Script> script = Script::Compile(context, source).ToLocalChecked();
 
     // Run the script to get the result.
-    //Local<Value> result = script->Run(context).ToLocalChecked();
+    Local<Value> result = script->Run(context).ToLocalChecked();
+    
     // Convert the result to an UTF8 string and print it.
-    //String::Utf8Value utf8(result);
-    //printf("%s\n", *utf8);
+    String::Utf8Value utf8(result);
+    printf("%s\n", *utf8);
     printf(" should start dtors:\n");
   }
   // Dispose the isolate and tear down V8.

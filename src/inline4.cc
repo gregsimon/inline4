@@ -181,16 +181,31 @@ Maybe<int32_t> Value::Int32Value(
   I4T;
   // V8 would put this into the heap, but we won't commit it to 
   // the duktape heap until we know what it's being used for.
-  iString* str = new iString();
+  iString* str = new iString(data);
   TrackHandle(str);
-  str->s = data;
   String* v8_str = reinterpret_cast<String*>(str);
   return Local<String>(Local<String>(v8_str));
 }
-int String::Length() const { I4T; return 0; }
-int String::Utf8Length() const { I4T; return 0; }
-bool String::IsOneByte() const { I4T; return false; }
-bool String::ContainsOnlyOneByte() const { I4T; return false; }
+int String::Length() const {
+  I4T;
+  const iString* s = reinterpret_cast<const iString*>(this);
+  return s->len();
+}
+int String::Utf8Length() const {
+  I4T;
+  const iString* s = reinterpret_cast<const iString*>(this);
+  return s->len();
+}
+bool String::IsOneByte() const {
+  I4T;
+  const iString* s = reinterpret_cast<const iString*>(this);
+  return (s->len() == 1);
+}
+bool String::ContainsOnlyOneByte() const {
+  I4T;
+  const iString* s = reinterpret_cast<const iString*>(this);
+  return (s->len() == 1);
+}
 
 
 // -------------------------------------------------------------------------
@@ -213,15 +228,45 @@ String::Utf8Value::~Utf8Value() {
   iContext* icontext = reinterpret_cast<iContext*>(*context);
   iString* istr = reinterpret_cast<iString*>(*source);
 
-  (void)duk_compile_string(icontext->ctx, 0, istr->s.c_str());
+  duk_compile_string(icontext->ctx, 0, istr->s.c_str());
   // result is on top of the value stack.
 
-  // TODO : extract bytecode?
+  duk_dump_function(icontext->ctx);
+  // can be loaded back with duk_load_function()
 
-  return MaybeLocal<Script>();
+  duk_size_t bc_len;
+  uint8_t* bc_ptr = (uint8_t*)duk_require_buffer(icontext->ctx, -1, &bc_len);
+
+
+  iScript* iscript = new iScript();
+  TrackHandle(iscript);
+  
+  iscript->set(bc_ptr, bc_len);
+  return Utils::Convert<Script>(iscript);
 }
 /* static */ MaybeLocal<Value> Script::Run(Local<Context> context) {
   I4T;
+
+  iScript* iscript = reinterpret_cast<iScript*>(this);
+  iContext* icontext = reinterpret_cast<iContext*>(*context);
+  printf("stack top index=%d\n",duk_get_top_index(icontext->ctx));
+
+  duk_push_lstring(icontext->ctx, (const char*)iscript->bytecode(), 
+      iscript->len());
+  duk_to_buffer(icontext->ctx, -1, NULL);
+  duk_load_function(icontext->ctx);
+
+  duk_push_global_object(icontext->ctx);
+  duk_call_method(icontext->ctx, 0);
+
+  // return value is on top of stack
+  printf("result is %s\n", duk_to_string(icontext->ctx, -1));
+  printf("stack top index=%d\n",duk_get_top_index(icontext->ctx));
+
+  duk_pop(icontext->ctx); // pop the return value
+
+  
+
   return MaybeLocal<Value>();
 }
 
