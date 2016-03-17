@@ -588,3 +588,25 @@ DUK_EXTERNAL void duk_set_finalizer(duk_context *ctx, duk_idx_t index) {
 
 	duk_put_prop_stridx(ctx, index, DUK_STRIDX_INT_FINALIZER);
 }
+
+
+/*
+ *  Object Weak Reference
+ */
+
+/* XXX: these could be implemented as macros calling an internal function
+ * directly.
+ * XXX: same issue as with Duktape.fin: there's no way to delete the property
+ * now (just set it to undefined).
+ */
+DUK_EXTERNAL void duk_get_weakreference(duk_context *ctx, duk_idx_t index) {
+	DUK_ASSERT_CTX_VALID(ctx);
+
+	duk_get_prop_stridx(ctx, index, DUK_STRIDX_INT_WEAKREF);
+}
+
+DUK_EXTERNAL void duk_set_weakreference(duk_context *ctx, duk_idx_t index) {
+	DUK_ASSERT_CTX_VALID(ctx);
+
+	duk_put_prop_stridx(ctx, index, DUK_STRIDX_INT_WEAKREF);
+}

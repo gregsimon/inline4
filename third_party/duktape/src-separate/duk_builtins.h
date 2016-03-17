@@ -427,6 +427,7 @@ DUK_INTERNAL_DECL const duk_uint8_t duk_strings_data[2624];
 #define DUK_STRIDX_PUBLIC                                             411                            /* 'public' */
 #define DUK_STRIDX_STATIC                                             412                            /* 'static' */
 #define DUK_STRIDX_YIELD                                              413                            /* 'yield' */
+#define DUK_STRIDX_INT_WEAKREF                                        414                            /* '\x00Weakref' */
 
 #define DUK_HEAP_STRING_UC_LOGGER(heap)                               DUK_HEAP_GET_STRING((heap),DUK_STRIDX_UC_LOGGER)
 #define DUK_HTHREAD_STRING_UC_LOGGER(thr)                             DUK_HTHREAD_GET_STRING((thr),DUK_STRIDX_UC_LOGGER)
@@ -1256,6 +1257,7 @@ DUK_INTERNAL_DECL const duk_uint8_t duk_strings_data[2624];
 #define DUK_HTHREAD_STRING_STATIC(thr)                                DUK_HTHREAD_GET_STRING((thr),DUK_STRIDX_STATIC)
 #define DUK_HEAP_STRING_YIELD(heap)                                   DUK_HEAP_GET_STRING((heap),DUK_STRIDX_YIELD)
 #define DUK_HTHREAD_STRING_YIELD(thr)                                 DUK_HTHREAD_GET_STRING((thr),DUK_STRIDX_YIELD)
+#define DUK_HTHREAD_STRING_INT_WEAKREF(thr)                           DUK_HTHREAD_GET_STRING((thr),DUK_STRIDX_INT_WEAKREF)
 
 #define DUK_HEAP_NUM_STRINGS                                          414
 
@@ -1772,6 +1774,7 @@ DUK_INTERNAL_DECL const duk_uint8_t duk_strings_data[2624];
 #define DUK_STRIDX_PUBLIC                                             411                            /* 'public' */
 #define DUK_STRIDX_STATIC                                             412                            /* 'static' */
 #define DUK_STRIDX_YIELD                                              413                            /* 'yield' */
+#define DUK_STRIDX_INT_WEAKREF                                        414                            /* '\x00Weakref' */
 
 #define DUK_HEAP_STRING_UC_LOGGER(heap)                               DUK_HEAP_GET_STRING((heap),DUK_STRIDX_UC_LOGGER)
 #define DUK_HTHREAD_STRING_UC_LOGGER(thr)                             DUK_HTHREAD_GET_STRING((thr),DUK_STRIDX_UC_LOGGER)
@@ -2601,6 +2604,8 @@ DUK_INTERNAL_DECL const duk_uint8_t duk_strings_data[2624];
 #define DUK_HTHREAD_STRING_STATIC(thr)                                DUK_HTHREAD_GET_STRING((thr),DUK_STRIDX_STATIC)
 #define DUK_HEAP_STRING_YIELD(heap)                                   DUK_HEAP_GET_STRING((heap),DUK_STRIDX_YIELD)
 #define DUK_HTHREAD_STRING_YIELD(thr)                                 DUK_HTHREAD_GET_STRING((thr),DUK_STRIDX_YIELD)
+#define DUK_HEAP_STRING_INT_WEAKREF(heap)                             DUK_HEAP_GET_STRING((heap),DUK_STRIDX_INT_WEAKREF)
+#define DUK_HTHREAD_STRING_INT_WEAKREF(thr)                           DUK_HTHREAD_GET_STRING((thr),DUK_STRIDX_INT_WEAKREF)
 
 #define DUK_HEAP_NUM_STRINGS                                          414
 
@@ -3117,6 +3122,7 @@ DUK_INTERNAL_DECL const duk_uint8_t duk_strings_data[2624];
 #define DUK_STRIDX_PUBLIC                                             411                            /* 'public' */
 #define DUK_STRIDX_STATIC                                             412                            /* 'static' */
 #define DUK_STRIDX_YIELD                                              413                            /* 'yield' */
+#define DUK_STRIDX_INT_WEAKREF                                        414                            /* '\x00Weakref' */
 
 #define DUK_HEAP_STRING_UC_LOGGER(heap)                               DUK_HEAP_GET_STRING((heap),DUK_STRIDX_UC_LOGGER)
 #define DUK_HTHREAD_STRING_UC_LOGGER(thr)                             DUK_HTHREAD_GET_STRING((thr),DUK_STRIDX_UC_LOGGER)
@@ -3946,6 +3952,7 @@ DUK_INTERNAL_DECL const duk_uint8_t duk_strings_data[2624];
 #define DUK_HTHREAD_STRING_STATIC(thr)                                DUK_HTHREAD_GET_STRING((thr),DUK_STRIDX_STATIC)
 #define DUK_HEAP_STRING_YIELD(heap)                                   DUK_HEAP_GET_STRING((heap),DUK_STRIDX_YIELD)
 #define DUK_HTHREAD_STRING_YIELD(thr)                                 DUK_HTHREAD_GET_STRING((thr),DUK_STRIDX_YIELD)
+#define DUK_HTHREAD_STRING_INT_WEAKREF(thr)                           DUK_HTHREAD_GET_STRING((thr),DUK_STRIDX_INT_WEAKREF)
 
 #define DUK_HEAP_NUM_STRINGS                                          414
 

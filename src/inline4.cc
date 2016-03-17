@@ -91,6 +91,16 @@ void TrackHandle(iBase* handle) {
   }
 }
 
+/**
+  * V8 handles are tracked locally (on the stack) or can be 
+  * made persistent. A persisent handle ensures the heap-allocated
+  * object is pinned in memory until C++ releases it. A callback
+  * is sent to the C++ side when v8 wants to collect the object
+  * and there is ONLY a C++ persistent handle to it.
+  *
+  * Duktape has no concept of a weak reference. It does however have
+  * a finalizer */
+
 // -------------------------------------------------------------------------
 // class HandleScope
 HandleScope::HandleScope(Isolate* isolate) {
@@ -260,8 +270,10 @@ String::Utf8Value::~Utf8Value() {
   duk_call_method(icontext->ctx, 0);
 
   // return value is on top of stack
-  printf("result is %s\n", duk_to_string(icontext->ctx, -1));
-  printf("stack top index=%d\n",duk_get_top_index(icontext->ctx));
+  //printf("result is %s\n", duk_to_string(icontext->ctx, -1));
+  //printf("stack top index=%d\n",duk_get_top_index(icontext->ctx));
+
+  iBase* iresult = new iBase(d)
 
   duk_pop(icontext->ctx); // pop the return value
 

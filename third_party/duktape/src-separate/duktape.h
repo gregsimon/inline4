@@ -816,9 +816,19 @@ DUK_EXTERNAL_DECL void duk_get_prototype(duk_context *ctx, duk_idx_t index);
 DUK_EXTERNAL_DECL void duk_set_prototype(duk_context *ctx, duk_idx_t index);
 
 /*
- *  Object finalizer
+ *  Object Weak Reference
+ *
+ *  duk_push_object(ctx);
+ *  duk_push_c_function(ctx, my_weak_callback, 2);
+ *  duk_set_weakreference(ctx, -2);
  */
 
+DUK_EXTERNAL_DECL void duk_get_weakreference(duk_context *ctx, duk_idx_t index);
+DUK_EXTERNAL_DECL void duk_set_weakreference(duk_context *ctx, duk_idx_t index);
+
+/*
+ *  Object finalizer
+ */
 DUK_EXTERNAL_DECL void duk_get_finalizer(duk_context *ctx, duk_idx_t index);
 DUK_EXTERNAL_DECL void duk_set_finalizer(duk_context *ctx, duk_idx_t index);
 
