@@ -273,8 +273,8 @@ String::Utf8Value::~Utf8Value() {
   //printf("result is %s\n", duk_to_string(icontext->ctx, -1));
   //printf("stack top index=%d\n",duk_get_top_index(icontext->ctx));
 
-  iBase* iresult = new iBase(d)
-
+  
+ 
   duk_pop(icontext->ctx); // pop the return value
 
   
