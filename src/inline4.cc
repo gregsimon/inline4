@@ -173,14 +173,6 @@ Isolate* Context::GetIsolate() {
 }
 
 
-// -------------------------------------------------------------------------
-// class Value
-bool Value::IsTrue() const { return false; }
-Maybe<int32_t> Value::Int32Value(
-      Local<Context> context) const {
-  I4T;
-  return Just<int32_t>(0);
-}
 
 // -------------------------------------------------------------------------
 // class String
@@ -380,10 +372,21 @@ void V8::InitializeExternalStartupData(const char* natives_blob,
 
 
 // -------------------------------------------------------------------------
+// class Value
+bool Value::IsTrue() const { return false; }
+Maybe<int32_t> Value::Int32Value(
+      Local<Context> context) const {
+  I4T;
+  return Just<int32_t>(0);
+}
+
+// -------------------------------------------------------------------------
 // class Template
 void Template::Set(Local<Name> name, Local<Data> value,
            PropertyAttribute attributes) {
   I4T;
+
+  printf("is string %d\n", name->IsString());
 }
 
 
@@ -400,15 +403,15 @@ void Template::Set(Local<Name> name, Local<Data> value,
   iIsolate* i = reinterpret_cast<iIsolate*>(isolate);
   iObjectTemplate* ot = new iObjectTemplate();
   iFunctionTemplate* ft = 0;
+  TrackHandle(ot);
 
   if (!constructor.IsEmpty()) {
     ft = new iFunctionTemplate();
     assert(0);
   }
 
-  ObjectTemplate* v8_ot = reinterpret_cast<ObjectTemplate*>(ot);
 
-  return Local<ObjectTemplate>();
+  return Utils::Convert<ObjectTemplate>(ot);
 }
 
 /**
@@ -431,10 +434,10 @@ void Template::Set(Local<Name> name, Local<Data> value,
   I4T;
   iFunctionTemplate* ft = new iFunctionTemplate();
   // TODO store signature
-  FunctionTemplate* v8_ft =  reinterpret_cast<FunctionTemplate*>(ft);
+
+  printf("len=%d\n", length);
   
-  //return Local<FunctionTemplate>(Local<FunctionTemplate>(v8_ft));
-  return Local<FunctionTemplate>();
+  return Utils::Convert<FunctionTemplate>(ft);
 }
 
 // -------------------------------------------------------------------------
