@@ -222,9 +222,20 @@ bool String::ContainsOnlyOneByte() const {
 // class String::Utf8value
 String::Utf8Value::Utf8Value(Local<v8::Value> obj) {
   I4T;
+
+  iBase* b = reinterpret_cast<iBase*>(*obj);
+  iIsolate* iso = _isolates.top();
+
+  duk_push_heapptr(iso->ctx, b->_ptr);
+  const char* str = duk_require_string(iso->ctx, -1);
+  length_ = (int)strlen(str);
+  str_ = new char[length_+1];
+  strcpy(str_, str);
+  duk_pop(iso->ctx);
 }
 String::Utf8Value::~Utf8Value() {
   I4T;
+  delete[] str_;
 }
 
 // -------------------------------------------------------------------------
@@ -270,16 +281,18 @@ String::Utf8Value::~Utf8Value() {
   duk_call_method(icontext->ctx, 0);
 
   // return value is on top of stack
-  //printf("result is %s\n", duk_to_string(icontext->ctx, -1));
-  //printf("stack top index=%d\n",duk_get_top_index(icontext->ctx));
+  // We'll allocate a specialization of iBase to pass back to the 
+  // caller. We'll stash a heap ptr in there
 
-  
+  iBase* rv = new iBase(duk_get_type(icontext->ctx, -1), 
+        duk_get_heapptr(icontext->ctx, -1));
+  TrackHandle(rv);
+
+  // TODO : this value could get collected. We should take a weak reference to it.
  
   duk_pop(icontext->ctx); // pop the return value
 
-  
-
-  return MaybeLocal<Value>();
+  return Utils::Convert<Value>(rv);
 }
 
 

@@ -21,9 +21,10 @@
 class iBase {
 public:
   iBase() = delete;
-  iBase(int t=DUK_TYPE_UNDEFINED) : _type(t) {}
-  virtual ~iBase() {}
+  iBase(int t=DUK_TYPE_UNDEFINED, void* ptr=0) : _type(t), _ptr(ptr) {}
+  virtual ~iBase() { _ptr=0; }
   int _type; // DUK_TYPE_*
+  void* _ptr;
 };
 
 // Internal representations of v8.h client objects
