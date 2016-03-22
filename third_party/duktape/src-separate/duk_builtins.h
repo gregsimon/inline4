@@ -1259,11 +1259,11 @@ DUK_INTERNAL_DECL const duk_uint8_t duk_strings_data[2624];
 #define DUK_HTHREAD_STRING_YIELD(thr)                                 DUK_HTHREAD_GET_STRING((thr),DUK_STRIDX_YIELD)
 #define DUK_HTHREAD_STRING_INT_WEAKREF(thr)                           DUK_HTHREAD_GET_STRING((thr),DUK_STRIDX_INT_WEAKREF)
 
-#define DUK_HEAP_NUM_STRINGS                                          414
+#define DUK_HEAP_NUM_STRINGS                                          415
 
 #define DUK_STRIDX_START_RESERVED                                     369
 #define DUK_STRIDX_START_STRICT_RESERVED                              405
-#define DUK_STRIDX_END_RESERVED                                       414                            /* exclusive endpoint */
+#define DUK_STRIDX_END_RESERVED                                       415                            /* exclusive endpoint */
 
 #if !defined(DUK_SINGLE_FILE)
 DUK_INTERNAL_DECL const duk_c_function duk_bi_native_functions[149];
@@ -2607,11 +2607,11 @@ DUK_INTERNAL_DECL const duk_uint8_t duk_strings_data[2624];
 #define DUK_HEAP_STRING_INT_WEAKREF(heap)                             DUK_HEAP_GET_STRING((heap),DUK_STRIDX_INT_WEAKREF)
 #define DUK_HTHREAD_STRING_INT_WEAKREF(thr)                           DUK_HTHREAD_GET_STRING((thr),DUK_STRIDX_INT_WEAKREF)
 
-#define DUK_HEAP_NUM_STRINGS                                          414
+#define DUK_HEAP_NUM_STRINGS                                          415
 
 #define DUK_STRIDX_START_RESERVED                                     369
 #define DUK_STRIDX_START_STRICT_RESERVED                              405
-#define DUK_STRIDX_END_RESERVED                                       414                            /* exclusive endpoint */
+#define DUK_STRIDX_END_RESERVED                                       415                            /* exclusive endpoint */
 
 #if !defined(DUK_SINGLE_FILE)
 DUK_INTERNAL_DECL const duk_c_function duk_bi_native_functions[149];
@@ -3954,11 +3954,11 @@ DUK_INTERNAL_DECL const duk_uint8_t duk_strings_data[2624];
 #define DUK_HTHREAD_STRING_YIELD(thr)                                 DUK_HTHREAD_GET_STRING((thr),DUK_STRIDX_YIELD)
 #define DUK_HTHREAD_STRING_INT_WEAKREF(thr)                           DUK_HTHREAD_GET_STRING((thr),DUK_STRIDX_INT_WEAKREF)
 
-#define DUK_HEAP_NUM_STRINGS                                          414
+#define DUK_HEAP_NUM_STRINGS                                          415
 
 #define DUK_STRIDX_START_RESERVED                                     369
 #define DUK_STRIDX_START_STRICT_RESERVED                              405
-#define DUK_STRIDX_END_RESERVED                                       414                            /* exclusive endpoint */
+#define DUK_STRIDX_END_RESERVED                                       415                          /* exclusive endpoint */
 
 #if !defined(DUK_SINGLE_FILE)
 DUK_INTERNAL_DECL const duk_c_function duk_bi_native_functions[149];

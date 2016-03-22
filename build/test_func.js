@@ -1,6 +1,6 @@
 
 var f = new Foo();
+//var b= 10;
 
-f.bar("hello");
-
-
+f = undefined;
+//f.bar("hello");

@@ -10,10 +10,14 @@ include_directories(../third_party/duktape/src-separate)
 include_directories(../third_party/v8/)
 include_directories(../third_party/v8/include)
 
+#set ( PREFLAGS
+#  "-DDUK_USE_DEBUG=1 -DDUK_USE_DPRINT=1 -DDUK_USE_DDPRINT=1 -DDUK_USE_DDDPRINT=1"
+#)
+
 # V8 requires C++11
 if(UNIX)
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g")
-    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${PREFLAGS} -std=c++11 -g")
+    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${PREFLAGS} -g")
 endif()
 
 set ( I4_SOURCES
