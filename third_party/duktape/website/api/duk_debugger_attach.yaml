@@ -1,0 +1,49 @@
+name: duk_debugger_attach
+
+proto: |
+  void duk_debugger_attach(duk_context *ctx,
+                           duk_debug_read_function read_cb,
+                           duk_debug_write_function write_cb,
+                           duk_debug_peek_function peek_cb,
+                           duk_debug_read_flush_function read_flush_cb,
+                           duk_debug_write_flush_function write_flush_cb,
+                           duk_debug_detached_function detached_cb,
+                           void *udata);
+
+summary: |
+  <p>Attach a debugger to the Duktape heap.  If debugger support is not
+  compiled into Duktape, throws an error.  See
+  <a href="https://github.com/svaarala/duktape/blob/master/doc/debugger.rst">debugger.rst</a>
+  for more information.</p>
+
+  <p>The <code>read_cb</code> and <code>write_cb</code> callbacks are mandatory.
+  The <code>peek_cb</code> is strongly recommended but optional.  The
+  <code>read_flush_cb</code> and <code>write_flush_cb</code> callbacks are
+  optional.  Unimplemented callbacks are indicated using a <code>NULL</code>.</p>
+
+  <div class="note">
+  Since Duktape 1.4.0 the debugger detached callback is allowed to call
+  <code><a href="#duk_debugger_attach">duk_debugger_attach()</a></code>
+  to immediately reattach the debugger.  In Duktape 1.3.0 and before the
+  immediate reattach potentially caused
+  <a href="https://github.com/svaarala/duktape/pull/399">some issues</a>.
+  </div>
+
+example: |
+  duk_debugger_attach(ctx,
+                      my_read_cb,
+                      my_write_cb,
+                      my_peek_cb,
+                      NULL,
+                      NULL,
+                      my_detached_cb,
+                      my_udata);
+
+tags:
+  - debug
+
+seealso:
+  - duk_debugger_detach
+  - duk_debugger_cooperate
+
+introduced: 1.2.0

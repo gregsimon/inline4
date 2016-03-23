@@ -1,0 +1,629 @@
+{
+    "line_map": [
+        {
+            "original_line": 1, 
+            "combined_line": 111, 
+            "original_file": "duk_internal.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 157, 
+            "original_file": "duk_replacements.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 190, 
+            "original_file": "duk_jmpbuf.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 217, 
+            "original_file": "duk_exception.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 236, 
+            "original_file": "duk_forwdecl.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 359, 
+            "original_file": "duk_builtins.h"
+        }, 
+        {
+            "original_line": 51, 
+            "combined_line": 4415, 
+            "original_file": "duk_internal.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 4417, 
+            "original_file": "duk_util.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 4948, 
+            "original_file": "duk_strings.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 5223, 
+            "original_file": "duk_js_bytecode.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 5429, 
+            "original_file": "duk_lexer.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 5862, 
+            "original_file": "duk_js_compiler.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 6090, 
+            "original_file": "duk_regexp.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 6173, 
+            "original_file": "duk_tval.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 6683, 
+            "original_file": "duk_heaphdr.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 7375, 
+            "original_file": "duk_api_internal.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 7552, 
+            "original_file": "duk_hstring.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 7748, 
+            "original_file": "duk_hobject.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 8668, 
+            "original_file": "duk_hcompiledfunction.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 8908, 
+            "original_file": "duk_hnativefunction.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 8941, 
+            "original_file": "duk_hbufferobject.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 9075, 
+            "original_file": "duk_hthread.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 9443, 
+            "original_file": "duk_hbuffer.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 9769, 
+            "original_file": "duk_heap.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 10357, 
+            "original_file": "duk_debugger.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 10460, 
+            "original_file": "duk_debug.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 10646, 
+            "original_file": "duk_error.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 10970, 
+            "original_file": "duk_unicode.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 11237, 
+            "original_file": "duk_json.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 11306, 
+            "original_file": "duk_js.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 11405, 
+            "original_file": "duk_numconv.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 11496, 
+            "original_file": "duk_bi_protos.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 11740, 
+            "original_file": "duk_selftest.h"
+        }, 
+        {
+            "original_line": 78, 
+            "combined_line": 11753, 
+            "original_file": "duk_internal.h"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 11756, 
+            "original_file": "duk_strings.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 11883, 
+            "original_file": "duk_debug_macros.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 12028, 
+            "original_file": "duk_builtins.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 13418, 
+            "original_file": "duk_error_macros.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 13586, 
+            "original_file": "duk_unicode_support.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 14729, 
+            "original_file": "duk_util_misc.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 14952, 
+            "original_file": "duk_util_hashprime.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 15030, 
+            "original_file": "duk_hobject_class.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 15163, 
+            "original_file": "duk_alloc_default.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 15196, 
+            "original_file": "duk_api_buffer.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 15270, 
+            "original_file": "duk_api_bytecode.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 15998, 
+            "original_file": "duk_api_call.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 16534, 
+            "original_file": "duk_api_codec.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 17173, 
+            "original_file": "duk_api_compile.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 17354, 
+            "original_file": "duk_api_debug.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 17528, 
+            "original_file": "duk_api_heap.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 17658, 
+            "original_file": "duk_api_logging.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 17711, 
+            "original_file": "duk_api_memory.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 17815, 
+            "original_file": "duk_api_object.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 18422, 
+            "original_file": "duk_api_stack.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 23091, 
+            "original_file": "duk_api_string.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 23423, 
+            "original_file": "duk_api_var.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 23510, 
+            "original_file": "duk_bi_array.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 24956, 
+            "original_file": "duk_bi_boolean.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 25025, 
+            "original_file": "duk_bi_buffer.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 27896, 
+            "original_file": "duk_bi_date.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 29627, 
+            "original_file": "duk_bi_date_unix.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 29939, 
+            "original_file": "duk_bi_date_windows.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 30038, 
+            "original_file": "duk_bi_duktape.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 30352, 
+            "original_file": "duk_bi_error.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 30733, 
+            "original_file": "duk_bi_function.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 31078, 
+            "original_file": "duk_bi_global.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 32295, 
+            "original_file": "duk_bi_json.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 35445, 
+            "original_file": "duk_bi_logger.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 35746, 
+            "original_file": "duk_bi_math.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 36095, 
+            "original_file": "duk_bi_number.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 36336, 
+            "original_file": "duk_bi_object.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 36914, 
+            "original_file": "duk_bi_pointer.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 36989, 
+            "original_file": "duk_bi_proxy.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 37056, 
+            "original_file": "duk_bi_regexp.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 37266, 
+            "original_file": "duk_bi_string.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 38581, 
+            "original_file": "duk_bi_thread.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 38891, 
+            "original_file": "duk_bi_thrower.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 38902, 
+            "original_file": "duk_debug_fixedbuffer.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 38972, 
+            "original_file": "duk_debug_heap.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 39220, 
+            "original_file": "duk_debug_vsnprintf.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 40263, 
+            "original_file": "duk_debugger.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 42287, 
+            "original_file": "duk_error_augment.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 42854, 
+            "original_file": "duk_error_longjmp.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 42897, 
+            "original_file": "duk_error_misc.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 43030, 
+            "original_file": "duk_error_throw.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 43212, 
+            "original_file": "duk_hbuffer_alloc.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 43345, 
+            "original_file": "duk_hbuffer_ops.c"
+        }, 
+        {
+            "original_line": 2, 
+            "combined_line": 43431, 
+            "original_file": "duk_hbufferobject_misc.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 43451, 
+            "original_file": "duk_heap_alloc.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 44440, 
+            "original_file": "duk_heap_hashstring.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 44557, 
+            "original_file": "duk_heap_markandsweep.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 45940, 
+            "original_file": "duk_heap_memory.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 46325, 
+            "original_file": "duk_heap_misc.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 46400, 
+            "original_file": "duk_heap_refcount.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 46982, 
+            "original_file": "duk_heap_stringcache.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 47281, 
+            "original_file": "duk_heap_stringtable.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 48401, 
+            "original_file": "duk_hobject_alloc.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 48593, 
+            "original_file": "duk_hobject_enum.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 49220, 
+            "original_file": "duk_hobject_finalizer.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 49330, 
+            "original_file": "duk_hobject_misc.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 49378, 
+            "original_file": "duk_hobject_pc2line.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 49629, 
+            "original_file": "duk_hobject_props.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 55550, 
+            "original_file": "duk_hstring_misc.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 55585, 
+            "original_file": "duk_hthread_alloc.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 55681, 
+            "original_file": "duk_hthread_builtins.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 56352, 
+            "original_file": "duk_hthread_misc.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 56461, 
+            "original_file": "duk_hthread_stacks.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 56938, 
+            "original_file": "duk_js_call.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 59696, 
+            "original_file": "duk_js_compiler.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 67491, 
+            "original_file": "duk_js_executor.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 72008, 
+            "original_file": "duk_js_ops.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 73369, 
+            "original_file": "duk_js_var.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 75182, 
+            "original_file": "duk_lexer.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 77248, 
+            "original_file": "duk_numconv.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 79515, 
+            "original_file": "duk_regexp_compiler.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 80595, 
+            "original_file": "duk_regexp_executor.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 81599, 
+            "original_file": "duk_replacements.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 81682, 
+            "original_file": "duk_selftest.c"
+        }, 
+        {
+            "original_line": 2, 
+            "combined_line": 82057, 
+            "original_file": "duk_tval.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 82195, 
+            "original_file": "duk_unicode_tables.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 87769, 
+            "original_file": "duk_util_bitdecoder.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 87840, 
+            "original_file": "duk_util_bitencoder.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 87884, 
+            "original_file": "duk_util_bufwriter.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 88245, 
+            "original_file": "duk_util_hashbytes.c"
+        }, 
+        {
+            "original_line": 1, 
+            "combined_line": 88303, 
+            "original_file": "duk_util_tinyrandom.c"
+        }
+    ]
+}

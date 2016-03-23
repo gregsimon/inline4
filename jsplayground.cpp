@@ -205,7 +205,7 @@ void test_weak_refs(const char* )
     // add a finalizer to this object.
     duk_push_c_function(ctx, my_weak_ref_callback, 1);
     //duk_set_finalizer(ctx, -2);
-    duk_set_weakreference(ctx, -2);
+    duk_set_weakref(ctx, -2);
     void* ptr = duk_get_heapptr(ctx, -1);
     printf("ptr = %p\n", ptr);
     dump_value_stack(ctx, "stack should have one value");
