@@ -281,6 +281,15 @@ DUK_LOCAL void duk__refzero_free_pending(duk_hthread *thr) {
 #endif
 
 		/*
+		 * Weakref check.
+		 *
+		 * If there is a weakref on this object, we need to keep it alive in the heap.
+		 */
+		if (duk_hobject_hasprop_raw(thr, obj, DUK_HTHREAD_STRING_INT_WEAKREF(thr))) {
+			printf("TODO : OBJ HAS WEAK REF\n");
+		}
+
+		/*
 		 *  Finalizer check.
 		 *
 		 *  Note: running a finalizer may have arbitrary side effects, e.g.

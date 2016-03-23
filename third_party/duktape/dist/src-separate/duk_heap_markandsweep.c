@@ -264,6 +264,7 @@ DUK_LOCAL void duk__mark_finalizable(duk_heap *heap) {
 
 	hdr = heap->heap_allocated;
 	while (hdr) {
+
 		/* A finalizer is looked up from the object and up its prototype chain
 		 * (which allows inherited finalizers).  A prototype loop must not cause
 		 * an error to be thrown here; duk_hobject_hasprop_raw() will ignore a
