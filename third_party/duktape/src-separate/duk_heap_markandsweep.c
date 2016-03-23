@@ -250,6 +250,11 @@ DUK_LOCAL void duk__mark_refzero_list(duk_heap *heap) {
  *
  *  Objects are first marked FINALIZABLE and only then marked as reachability
  *  roots; otherwise circular references might be handled inconsistently.
+ *
+ *  If the object has a weakreference, it is parked off to the side and not
+ *  collected. The object will remain parked until the weakreference is
+ *  cleared (by setting to undefined)
+
  */
 
 DUK_LOCAL void duk__mark_finalizable(duk_heap *heap) {
@@ -264,6 +269,18 @@ DUK_LOCAL void duk__mark_finalizable(duk_heap *heap) {
 
 	hdr = heap->heap_allocated;
 	while (hdr) {
+
+		/* This ojbect is about to be collected. If the user has placed a weak ref
+		 * on it, call the callback and park the object off to the side. It will
+		 * remain 'parked' until the weak reference is removed.
+		 */
+		printf("check if obj has weakref\n");
+		if (!DUK_HEAPHDR_HAS_REACHABLE(hdr) &&
+			  DUK_HEAPHDR_GET_TYPE(hdr) == DUK_HTYPE_OBJECT &&
+		    duk_hobject_hasprop_raw(thr, (duk_hobject *) hdr, DUK_HTHREAD_STRING_INT_WEAKREF(thr))) {
+			printf("TODO : call this weak reference!\n");
+		}
+
 		/* A finalizer is looked up from the object and up its prototype chain
 		 * (which allows inherited finalizers).  A prototype loop must not cause
 		 * an error to be thrown here; duk_hobject_hasprop_raw() will ignore a
